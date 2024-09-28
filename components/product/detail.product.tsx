@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Pressable,
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 // const ProductDetailScreen = ({ route }: { route: any }) => {
 //     const { product }: { product: IProduct } = route.params;
@@ -30,9 +31,12 @@ const ProductDetailScreen = () => {
             <View style={styles.detailsContainer}>
                 <Text style={styles.productName}>{product.artName}</Text>
 
-                <View style={styles.priceLikeContainer}>
+                <View style={styles.brandDealContainer}>
                     <Text>Brand: {product.brand}</Text>
-                    <Text>Limited Time Deal: {product.limitedTimeDeal * 100}%</Text>
+                    <View style={styles.DealContainer}>
+                        <Text style={styles.productDeal}>Limited Time Deal: {product.limitedTimeDeal * 100}%</Text>
+                        <MaterialCommunityIcons name="sale" size={20} color="#e91e63" />
+                    </View>
                 </View>
 
                 <View style={styles.priceLikeContainer}>
@@ -116,6 +120,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 10,
+    },
+    productDeal: {
+        color: "red",
+        fontSize: 15,
+        marginRight: 3,
+    },
+    brandDealContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    DealContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
     priceLikeContainer: {
         flexDirection: 'row',

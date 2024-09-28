@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions, Pressable } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const { width } = Dimensions.get('window');
 
@@ -23,8 +24,20 @@ const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: b
             <View style={fullscreen ? [styles.card, { width: CARD_WIDTH_FULLSCREEN }] : [styles.card, { width: CARD_WIDTH_HAlFSCREEN }]}>
                 <Image source={{ uri: product.image }} style={styles.productImage} />
                 <Text numberOfLines={2} style={styles.productName}>{product.artName}</Text>
+
                 <View style={styles.infoContainer}>
                     <Text style={styles.productPrice}>${product.price}</Text>
+                    {product.limitedTimeDeal > 0 ?
+                    (
+                        <View style={styles.LimitedPercentContainer}>
+                            <MaterialCommunityIcons name="sale" size={20} color="#e91e63" />
+                            <Text style={styles.productDeal}>{product.limitedTimeDeal * 100}%</Text>
+                        </View>
+                    ) : (
+                        <></>
+                    )
+                }
+
                     <TouchableOpacity onPress={() => { }} style={styles.likeIcon}>
                         <AntDesign name={liked ? 'heart' : 'hearto'} size={24} color={liked ? '#e91e63' : '#666'} />
                     </TouchableOpacity>
@@ -56,9 +69,18 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
     },
+    LimitedPercentContainer: {
+        flexDirection: 'row',
+        alignItems: "center",
+        justifyContent: "flex-end",
+        padding: 7,
+    },
+    productDeal: {
+        marginLeft: 3,
+        color: "red"
+    },
     infoContainer: {
         paddingHorizontal: 7,
-        paddingTop: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
