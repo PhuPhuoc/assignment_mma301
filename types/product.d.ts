@@ -1,8 +1,10 @@
 type IProduct = {
     id: number;
-    name: string;
+    artName: string;
     price: string;
-    desc: string;
+    description: string;
+    glassSurface: boolean;
     image: string;
-    liked: boolean;
+    brand: string;
+    limitedTimeDeal: number
 };

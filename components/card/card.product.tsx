@@ -5,8 +5,10 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 
-const CARD_WIDTH_HAlFSCREEN = (width / 2) - 10;
-const CARD_WIDTH_FULLSCREEN = width - 10;
+// marginHorizontal
+const CARD_MARGIN_HORIZONTAL = 5; // 1 card
+const CARD_WIDTH_HAlFSCREEN = (width / 2) - CARD_MARGIN_HORIZONTAL * 2; // 2 card in 1 colum
+const CARD_WIDTH_FULLSCREEN = width - CARD_MARGIN_HORIZONTAL * 2;
 
 const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: boolean }) => {
 
@@ -14,17 +16,17 @@ const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: b
     const pressBtnViewDetail = (item: IProduct) => {
         nav.navigate("Detail", { product: item })
     }
-
+    const liked = false
     return (
         <Pressable
             onPress={() => { pressBtnViewDetail(product) }}>
             <View style={fullscreen ? [styles.card, { width: CARD_WIDTH_FULLSCREEN }] : [styles.card, { width: CARD_WIDTH_HAlFSCREEN }]}>
                 <Image source={{ uri: product.image }} style={styles.productImage} />
-                <Text style={styles.productName}>{product.name}</Text>
+                <Text numberOfLines={2} style={styles.productName}>{product.artName}</Text>
                 <View style={styles.infoContainer}>
-                    <Text style={styles.productPrice}>{product.price}</Text>
+                    <Text style={styles.productPrice}>${product.price}</Text>
                     <TouchableOpacity onPress={() => { }} style={styles.likeIcon}>
-                        <AntDesign name={product.liked ? 'heart' : 'hearto'} size={24} color={product.liked ? '#e91e63' : '#666'} />
+                        <AntDesign name={liked ? 'heart' : 'hearto'} size={24} color={liked ? '#e91e63' : '#666'} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         elevation: 3,
         marginBottom: 15,
-        marginHorizontal: 5,  // Khoảng cách giữa các card
+        marginHorizontal: CARD_MARGIN_HORIZONTAL,  // Khoảng cách giữa các card
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     },
     productName: {
         paddingTop: 5,
-        paddingLeft: 7,
+        paddingHorizontal: 7,
         fontSize: 15,
         fontWeight: 'bold',
         color: '#000',
