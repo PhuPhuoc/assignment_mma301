@@ -1,0 +1,32 @@
+[
+    {
+        "user": "Alice",
+        "rating": 5,
+        "comment": "Sản phẩm tuyệt vời! Tôi rất thích."
+    },
+    {
+        "user": "Bob",
+        "rating": 4,
+        "comment": "Sản phẩm tốt, nhưng có một vài điểm cần cải thiện."
+    },
+    {
+        "user": "Charlie",
+        "rating": 3,
+        "comment": "Trung bình, không như kỳ vọng."
+    },
+    {
+        "user": "Tom",
+        "rating": 3,
+        "comment": "Trung bình, không như kỳ vọng."
+    },
+    {
+        "user": "Violet",
+        "rating": 2,
+        "comment": "Quá tệ, không như kỳ vọng."
+    },
+    {
+        "user": "Arthur",
+        "rating": 5,
+        "comment": "Very goodddddddddd <3 "
+    }
+]

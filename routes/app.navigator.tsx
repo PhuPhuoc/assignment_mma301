@@ -5,6 +5,7 @@ import LikedProductScreen from "../components/product/liked.product";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ShowProductsScreen from "../components/product/show.product";
 import ProductDetailScreen from "../components/product/detail.product";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -56,7 +57,8 @@ const AppNavigator = () => {
                     options={{
                         tabBarLabel: 'Home',
                         tabBarIcon: ({ focused }) => (
-                            <AntDesign name="home" size={focused ? 26 : 22} color={focused ? "#e91e63" : "#BEBEBE"} />
+                            // <AntDesign name="home" size={focused ? 33 : 27} color={focused ? "#e91e63" : "#BEBEBE"} />
+                            <Ionicons name="home-outline" size={focused ? 30 : 25} color={focused ? "#e91e63" : "#BEBEBE"}/>
                         ),
                     }} />
                 {/* <Tab.Screen
@@ -74,7 +76,8 @@ const AppNavigator = () => {
                     options={{
                         tabBarLabel: 'Liked',
                         tabBarIcon: ({ focused }) => (
-                            <AntDesign name="heart" size={focused ? 26 : 22} color={focused ? "#e91e63" : "#BEBEBE"} />
+                            // <AntDesign name="heart" size={focused ? 26 : 22} color={focused ? "#e91e63" : "#BEBEBE"} />
+                            <Ionicons name="heart-circle-outline" size={focused ? 30 : 25} color={focused ? "#e91e63" : "#BEBEBE"} />
                         ),
                     }} />
             </Tab.Navigator>

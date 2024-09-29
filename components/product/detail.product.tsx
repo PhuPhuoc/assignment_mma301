@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Pressable, Modal } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { CheckExistProductInLikedList, RemoveProduct, StoreData } from '../../storage/async.storage';
+import ProductFeedback from '../feedback/feedback.product';
 
 // const ProductDetailScreen = ({ route }: { route: any }) => {
 //     const { product }: { product: IProduct } = route.params;
 
 const ProductDetailScreen = () => {
-    const liked = false
+
     const [modalVisible, setModalVisible] = useState(false);
     const route = useRoute<RouteProp<ProductStackParamList>>();
     const product = route.params?.product
@@ -20,6 +22,28 @@ const ProductDetailScreen = () => {
             </View>
         );
     }
+
+    const [liked, setLiked] = useState(false);
+    useEffect(() => {
+        const checkIfLiked = async () => {
+            const flag = await CheckExistProductInLikedList({ product });
+            setLiked(flag);
+        };
+
+        checkIfLiked();
+    }, [product]);
+
+    const pressLikedProduct = async ({ product }: { product: IProduct }) => {
+        const flag = await CheckExistProductInLikedList({ product })
+        if (flag) {
+            await RemoveProduct({ product });
+            setLiked(false);
+        } else {
+            await StoreData({ product });
+            setLiked(true);
+        }
+    }
+
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
             <Pressable
@@ -32,7 +56,7 @@ const ProductDetailScreen = () => {
                 <Text style={styles.productName}>{product.artName}</Text>
 
                 <View style={styles.brandDealContainer}>
-                    <Text>Brand: {product.brand}</Text>
+                    <Text style={styles.brandTitle}>Brand: {product.brand}</Text>
                     <View style={styles.DealContainer}>
                         <Text style={styles.productDeal}>Limited Time Deal: {product.limitedTimeDeal * 100}%</Text>
                         <MaterialCommunityIcons name="sale" size={20} color="#e91e63" />
@@ -41,13 +65,13 @@ const ProductDetailScreen = () => {
 
                 <View style={styles.priceLikeContainer}>
                     <Text style={styles.productPrice}>${product.price}</Text>
-                    <TouchableOpacity>
+                    <Pressable onPress={() => pressLikedProduct({ product })}>
                         <AntDesign
                             name={liked ? 'heart' : 'hearto'}
                             size={30}
                             color={liked ? '#e91e63' : '#666'}
                         />
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
 
 
@@ -72,6 +96,7 @@ const ProductDetailScreen = () => {
                 </TouchableOpacity>
             </View>
 
+            <ProductFeedback />
 
             {/* modal for image */}
             <Modal
@@ -131,6 +156,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    brandTitle: {
+        fontSize: 17,
+        color: "pink",
+        fontStyle: "italic",
+        fontWeight: "bold"
+    },
     DealContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -148,13 +179,13 @@ const styles = StyleSheet.create({
         color: '#e91e63',
     },
     sectionTitle: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         marginTop: 20,
         color: '#555',
     },
     productDescription: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#666',
         marginVertical: 10,
         lineHeight: 22,

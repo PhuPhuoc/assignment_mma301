@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions, Pressable } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { CheckExistProductInLikedList, GetAllKeys, GetAllProduct, RemoveProduct, StoreData } from '../../storage/async.storage';
 
 const { width } = Dimensions.get('window');
 
@@ -12,12 +13,41 @@ const CARD_WIDTH_HAlFSCREEN = (width / 2) - CARD_MARGIN_HORIZONTAL * 2; // 2 car
 const CARD_WIDTH_FULLSCREEN = width - CARD_MARGIN_HORIZONTAL * 2;
 
 const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: boolean }) => {
-
+    const [liked, setLiked] = useState(false);
     const nav = useNavigation<NavigationProp<ProductStackParamList>>();
     const pressBtnViewDetail = (item: IProduct) => {
         nav.navigate("Detail", { product: item })
     }
-    const liked = false
+
+    useEffect(() => {
+        const checkIfLiked = async () => {
+            const flag = await CheckExistProductInLikedList({ product });
+            setLiked(flag);
+        };
+
+        checkIfLiked();
+
+        // Lắng nghe sự kiện quay lại từ trang Detail
+        const unsubscribe = nav.addListener('focus', () => {
+            checkIfLiked(); // Kiểm tra lại trạng thái liked khi quay lại
+        });
+
+        // Cleanup listener
+        return unsubscribe;
+    }, [product, nav]);
+
+
+    const pressLikedProduct = async ({ product }: { product: IProduct }) => {
+        const flag = await CheckExistProductInLikedList({ product })
+        if (flag) {
+            await RemoveProduct({ product });
+            setLiked(false);
+        } else {
+            await StoreData({ product });
+            setLiked(true);
+        }
+    }
+
     return (
         <Pressable
             onPress={() => { pressBtnViewDetail(product) }}>
@@ -28,17 +58,17 @@ const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: b
                 <View style={styles.infoContainer}>
                     <Text style={styles.productPrice}>${product.price}</Text>
                     {product.limitedTimeDeal > 0 ?
-                    (
-                        <View style={styles.LimitedPercentContainer}>
-                            <MaterialCommunityIcons name="sale" size={20} color="#e91e63" />
-                            <Text style={styles.productDeal}>{product.limitedTimeDeal * 100}%</Text>
-                        </View>
-                    ) : (
-                        <></>
-                    )
-                }
+                        (
+                            <View style={styles.LimitedPercentContainer}>
+                                <MaterialCommunityIcons name="sale" size={20} color="#e91e63" />
+                                <Text style={styles.productDeal}>{product.limitedTimeDeal * 100}%</Text>
+                            </View>
+                        ) : (
+                            <></>
+                        )
+                    }
 
-                    <TouchableOpacity onPress={() => { }} style={styles.likeIcon}>
+                    <TouchableOpacity onPress={() => pressLikedProduct({ product })} style={styles.likeIcon}>
                         <AntDesign name={liked ? 'heart' : 'hearto'} size={24} color={liked ? '#e91e63' : '#666'} />
                     </TouchableOpacity>
                 </View>
@@ -49,7 +79,6 @@ const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: b
 
 const styles = StyleSheet.create({
     card: {
-        // width: CARD_WIDTH,
         backgroundColor: '#fff',
         borderRadius: 10,
         overflow: 'hidden',
