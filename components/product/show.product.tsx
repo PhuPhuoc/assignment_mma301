@@ -12,7 +12,7 @@ const ShowProductsScreen = () => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const response = await fetch('https://66f68687436827ced9777bb4.mockapi.io/api/v1/art_tool'); // API của bạn
+            const response = await fetch('https://66f68687436827ced9777bb4.mockapi.io/api/v1/art_tool');
             const data: IProduct[] = await response.json();
             setProducts(data);
             setOriginalProducts(data);
@@ -72,12 +72,28 @@ const ShowProductsScreen = () => {
                 showsVerticalScrollIndicator={false}
                 refreshing={loading}
                 onRefresh={handleRefresh}
+                ListFooterComponent={() => {
+                    return products.length > 0 ? (
+                        <View style={styles.footerContainer}>
+                            <Text style={styles.footerText}>All products have been loaded</Text>
+                        </View>
+                    ) : null;
+                }}
             />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    footerContainer: {
+        paddingVertical: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    footerText: {
+        fontSize: 16,
+        color: '#CCCCCC',
+    },
     searchcontainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -92,9 +108,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     iconPress: {
-        // backgroundColor: "#EEEEEE",
-        paddingVertical: 10,
-        paddingHorizontal: 30
+        padding: 10
     },
     icon: {
         marginRight: 10,
@@ -113,4 +127,3 @@ const styles = StyleSheet.create({
 })
 
 export default ShowProductsScreen
-

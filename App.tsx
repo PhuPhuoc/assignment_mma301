@@ -1,7 +1,10 @@
 import AppNavigator from './routes/app.navigator';
+import { AuthProvider } from './auth/use.auth';
 
 export default function App() {
     return (
-        <AppNavigator />
-    );
+        <AuthProvider>
+            <AppNavigator />
+        </AuthProvider>
+    )
 }

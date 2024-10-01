@@ -4,7 +4,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { CheckExistProductInLikedList, RemoveProduct, StoreData } from '../../storage/async.storage';
+import { CheckExistProductInLikedList, RemoveProduct, StoreData } from '../../storage/product.liked.storage';
 import ProductFeedback from '../feedback/feedback.product';
 
 // const ProductDetailScreen = ({ route }: { route: any }) => {

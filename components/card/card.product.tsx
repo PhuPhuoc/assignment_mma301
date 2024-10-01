@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions, Pressable 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { CheckExistProductInLikedList, GetAllKeys, GetAllProduct, RemoveProduct, StoreData } from '../../storage/async.storage';
+import { CheckExistProductInLikedList, GetAllKeys, GetAllProduct, RemoveProduct, StoreData } from '../../storage/product.liked.storage';
 
 const { width } = Dimensions.get('window');
 
@@ -12,7 +12,7 @@ const CARD_MARGIN_HORIZONTAL = 5; // 1 card
 const CARD_WIDTH_HAlFSCREEN = (width / 2) - CARD_MARGIN_HORIZONTAL * 2; // 2 card in 1 colum
 const CARD_WIDTH_FULLSCREEN = width - CARD_MARGIN_HORIZONTAL * 2;
 
-const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: boolean }) => {
+const ProductCard = ({ product, fullscreen, pressIcon = undefined }: { product: IProduct, fullscreen: boolean, pressIcon?: () => Promise<void> | undefined }) => {
     const [liked, setLiked] = useState(false);
     const nav = useNavigation<NavigationProp<ProductStackParamList>>();
     const pressBtnViewDetail = (item: IProduct) => {
@@ -46,6 +46,9 @@ const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: b
             await StoreData({ product });
             setLiked(true);
         }
+        if (pressIcon) {
+            pressIcon();
+        }
     }
 
     return (
@@ -68,9 +71,9 @@ const ProductCard = ({ product, fullscreen }: { product: IProduct, fullscreen: b
                         )
                     }
 
-                    <TouchableOpacity onPress={() => pressLikedProduct({ product })} style={styles.likeIcon}>
+                    <Pressable onPress={() => pressLikedProduct({ product })} style={styles.likeIcon}>
                         <AntDesign name={liked ? 'heart' : 'hearto'} size={24} color={liked ? '#e91e63' : '#666'} />
-                    </TouchableOpacity>
+                    </Pressable>
                 </View>
             </View>
         </Pressable>

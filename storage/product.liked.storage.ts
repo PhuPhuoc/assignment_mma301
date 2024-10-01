@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { KEY_PRODUCT, KEY_USER_LOGIN } from '../utils/const';
 
+const keyPro: string = KEY_PRODUCT
 
 const getData = async (key: string): Promise<IProduct | null> => {
     try {
@@ -15,11 +17,12 @@ const GetAllKeys = async (): Promise<string[]> => {
     let keys: string[] = []
     try {
         keys = [...await AsyncStorage.getAllKeys()]
+        console.log("key in GetAllKey: ", keys);
+
     } catch (e) {
         console.error("Error get key:", e);
         return keys;
     }
-
     return keys
 }
 
@@ -30,6 +33,9 @@ const GetAllProduct = async (): Promise<IProduct[]> => {
         keys = await GetAllKeys()
 
         for (const key of keys) {
+            if (key === KEY_USER_LOGIN) {
+                continue
+            }
             const product = await getData(key)
             if (product !== null) {
                 productFormStorage.push(product)
@@ -44,7 +50,7 @@ const GetAllProduct = async (): Promise<IProduct[]> => {
 };
 
 const CheckExistProductInLikedList = async ({ product }: { product: IProduct }): Promise<boolean> => {
-    const key = product.id + "";
+    const key = keyPro + product.id;
     const existingProduct = await AsyncStorage.getItem(key);
 
     if (existingProduct == null) {
@@ -56,7 +62,7 @@ const CheckExistProductInLikedList = async ({ product }: { product: IProduct }):
 const StoreData = async ({ product }: { product: IProduct }) => {
     try {
         const jsonValue = JSON.stringify(product);
-        const key = product.id + "";
+        const key = keyPro + product.id;
         await AsyncStorage.setItem(key, jsonValue);
     } catch (e) {
         console.error("Error saving data:", e);
@@ -65,13 +71,24 @@ const StoreData = async ({ product }: { product: IProduct }) => {
 
 const RemoveProduct = async ({ product }: { product: IProduct }) => {
     try {
-        await AsyncStorage.removeItem(product.id + "")
+        const key = keyPro + product.id;
+        await AsyncStorage.removeItem(key)
     } catch (e) {
         console.error("Error remove data:", e);
     }
 }
 
-export { CheckExistProductInLikedList, StoreData, GetAllProduct, GetAllKeys, RemoveProduct };
+const RemoveAllProduct = async () => {
+    const keys = await GetAllKeys()
+    for (const key of keys) {
+        if (key === KEY_USER_LOGIN) {
+            continue
+        }
+        await AsyncStorage.removeItem(key)
+    }
+}
+
+export { CheckExistProductInLikedList, StoreData, GetAllProduct, GetAllKeys, RemoveProduct, RemoveAllProduct };
 
 
 /*
