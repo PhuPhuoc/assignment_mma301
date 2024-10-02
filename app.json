@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Art Work",
-    "slug": "Art Work",
+    "name": "ArtWork",
+    "slug": "assignment_ecom",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/app_icon.png",
@@ -16,13 +16,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/app_icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.phuoc29.assignment_ecom"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/app_icon.png"
     },
     "extra": {
       "eas": {
