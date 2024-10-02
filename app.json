@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "assignment_ecom",
-    "slug": "assignment_ecom",
+    "name": "Art Work",
+    "slug": "Art Work",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

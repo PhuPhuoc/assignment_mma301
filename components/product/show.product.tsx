@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native"
 import ProductCard from "../card/card.product";
 import { Ionicons } from '@expo/vector-icons';
+import FillterProductBrand from "./filter.modal";
 
 const ShowProductsScreen = () => {
     const [products, setProducts] = useState<IProduct[]>([])
     const [originalProducts, setOriginalProducts] = useState<IProduct[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [searchText, setSearchText] = useState('');
+    const [brandFilter, setBrandFilter] = useState<string[]>([])
+    const [userbrandFilter, setUserbrandFilter] = useState<string[]>([])
+
 
     const fetchProducts = async () => {
         try {
@@ -26,6 +30,42 @@ const ShowProductsScreen = () => {
     useEffect(() => {
         fetchProducts();
     }, []);
+
+    const getListBrand = () => {
+        const brands: string[] = []
+        let brandMap = new Map();
+        for (let pro of products) {
+            if (brandMap.has(pro.brand)) {
+                continue
+            } else {
+                brandMap.set(pro.brand, pro.brand);
+            }
+        }
+        for (let [key, value] of brandMap) {
+            brands.push(value)
+        }
+        console.log("List brand: ", brands)
+        setBrandFilter(brands)
+    }
+
+    useEffect(() => {
+        getListBrand()
+    }, [originalProducts]);
+
+    useEffect(() => {
+        console.log("filter: ", userbrandFilter)
+        handleFilter()
+    }, [userbrandFilter]);
+
+    const handleFilter = () => {
+        if (userbrandFilter.length === 0) {
+            setProducts(originalProducts);
+            return
+        }
+        const filteredProducts = originalProducts.filter(product => userbrandFilter.includes(product.brand));
+        setProducts(filteredProducts)
+    }
+
 
     const handleRefresh = async () => {
         fetchProducts();
@@ -54,6 +94,11 @@ const ShowProductsScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.searchcontainer}>
+                <FillterProductBrand
+                    brandFilter={brandFilter}
+                    userbrandFilter={userbrandFilter}
+                    setUserbrandFilter={setUserbrandFilter}
+                />
                 <TextInput
                     style={styles.input}
                     placeholder="Search for products"
@@ -97,18 +142,26 @@ const styles = StyleSheet.create({
     searchcontainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: "center",
         backgroundColor: '#fff',
         borderRadius: 10,
         padding: 3,
         marginBottom: 20,
         marginHorizontal: 5,
+        // borderColor: "pink",
+        // borderWidth: 1,
     },
     input: {
         flex: 1,
-        marginLeft: 10,
+        marginLeft: 15,
+        // borderColor: "green",
+        // borderWidth: 1
     },
     iconPress: {
-        padding: 10
+        padding: 10,
+        // borderColor: "blue",
+        // borderWidth: 1,
+        marginStart: 5,
     },
     icon: {
         marginRight: 10,
