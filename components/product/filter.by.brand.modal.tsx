@@ -65,16 +65,25 @@ const FillterProductBrand = ({ brandFilter, userbrandFilter, setUserbrandFilter 
                             <Text>No review list found</Text>
                         )}
                         <View style={styles.line}></View>
-                        <View style={styles.btnClear}>
-                            <Pressable
-                                onPress={() => {
-                                    setSelectedBrands([])
-                                    setUserbrandFilter([])
-                                    setIsOpen(false)
-                                }}
-                            >
-                                <Text style={styles.txtBtnClear}>Clear Filter</Text>
-                            </Pressable>
+                        <View style={styles.btnContainer}>
+                            <View style={styles.btnClear}>
+                                <Pressable
+                                    onPress={() => {
+                                        setSelectedBrands([])
+                                        setUserbrandFilter([])
+                                        setIsOpen(false)
+                                    }}
+                                >
+                                    <Text style={styles.txtBtnClear}>Clear Filter</Text>
+                                </Pressable>
+                            </View>
+                            <View style={styles.btnOk}>
+                                <Pressable
+                                    onPress={() => handleCloseModal()}
+                                >
+                                    <Text style={styles.txtBtnOk}>OK</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </View>
                 </Pressable>
@@ -90,9 +99,9 @@ const styles = StyleSheet.create({
     btnFillter: {
         borderColor: "#e91e63",
         borderWidth: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 12,
         borderRadius: 20,
+        alignItems: "center"
     },
     modalOverlay: {
         flex: 1,
@@ -125,6 +134,12 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 16,
         color: '#333',
+        borderColor: "#ddd",
+        borderWidth: 0.7,
+        paddingVertical: 12,
+        paddingStart: 10,
+        width: "85%",
+        borderRadius: 12,
     },
     line: {
         borderColor: "#ddd",
@@ -133,16 +148,33 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20
     },
-    btnClear: {
+    btnContainer: {
+        width: "95%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    btnOk: {
         paddingHorizontal: 20,
         paddingVertical: 10,
         backgroundColor: "#e91e63",
         borderRadius: 20,
     },
-    txtBtnClear: {
+    txtBtnOk: {
         textAlign: "center",
         fontSize: 17,
         color: "#fff"
+    },
+    btnClear: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderColor: "#e91e63",
+        borderWidth: 1,
+        borderRadius: 20,
+    },
+    txtBtnClear: {
+        textAlign: "center",
+        fontSize: 17,
+        color: "#e91e63"
     }
 });
 

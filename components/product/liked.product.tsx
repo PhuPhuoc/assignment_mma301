@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { Button, FlatList, Pressable, StyleSheet, Text, View } from "react-native"
-import ProductCard from "../card/card.product";
-import { GetAllProduct, RemoveAllProduct, RemoveProduct } from "../../storage/product.liked.storage";
+import { useCallback, useState } from "react";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native"
+import { GetAllProduct, RemoveProduct } from "../../storage/product.liked.storage";
 import { useFocusEffect } from "@react-navigation/native";
 import FavoriteProductCard from "../card/card.favorite.product";
 
@@ -10,6 +9,7 @@ const LikedProductScreen = () => {
     const [loading, setLoading] = useState(false)
 
     const [listSelected, setListSelected] = useState<IProduct[]>([])
+    const [isClickSelectAll, setIsClickSelectAll] = useState<boolean>(false)
 
 
     const fetchProducts = async () => {
@@ -34,15 +34,11 @@ const LikedProductScreen = () => {
     };
 
 
-    const handleDeleteAllProductInLiked = async () => {
-        await RemoveAllProduct()
-        await fetchProducts();
-    }
-
     const handleDeleteSelected = async () => {
         for (const product of listSelected) {
             await RemoveProduct({ product });
         }
+        setListSelected([])
         await fetchProducts();
     }
 
@@ -54,21 +50,25 @@ const LikedProductScreen = () => {
         )
     }
 
+    const handleClickBtnSelect = () => {
+        if (!isClickSelectAll) {
+            setListSelected(products)
+            setIsClickSelectAll(true)
+        } else {
+            setListSelected([])
+            setIsClickSelectAll(false)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.btnDeleteAllContainer}>
                 <View style={styles.btnDeleteContainer}>
                     <Pressable
-                        style={styles.btnSelectAll}
-                        onPress={async () => { setListSelected(products) }}
+                        style={isClickSelectAll ? styles.btnClearSelect : styles.btnSelectAll}
+                        onPress={() => { handleClickBtnSelect() }}
                     >
-                        <Text style={styles.txtSelectAll}>Select All</Text>
-                    </Pressable>
-                    <Pressable
-                        style={styles.btnClearSelect}
-                        onPress={async () => { setListSelected([]) }}
-                    >
-                        <Text style={styles.txtClearSelect}>Clear select</Text>
+                        <Text style={isClickSelectAll ? styles.txtClearSelect : styles.txtSelectAll}>{isClickSelectAll ? "Clear selected" : "Select All"}</Text>
                     </Pressable>
                 </View>
                 <View>
