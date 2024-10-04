@@ -114,7 +114,10 @@ const ProductFeedback = () => {
                     selectedOption.listFB.map((feedback, index) => (
                         <View key={index} style={styles.CommentContainer}>
                             <View style={styles.UserStartContainer}>
-                                <Text style={styles.userName}>{feedback.user}</Text>
+                                <View style={styles.UserDate}>
+                                    <Text style={styles.userName}>{feedback.user}</Text>
+                                    <Text style={styles.date}>{feedback.date}</Text>
+                                </View>
                                 <View style={styles.ratingContainer}>
                                     {[...Array(feedback.rating)].map((_, i) => (
                                         <AntDesign key={i} name="star" size={20} color="#FFD700" />
@@ -187,12 +190,21 @@ const styles = StyleSheet.create({
     UserStartContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: 5
+    },
+    UserDate: {
+        flexDirection: "row",
+        alignItems: "center",
     },
     userName: {
         fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 5,
+        marginEnd: 24
+    },
+    date: {
+        fontSize: 12,
+        color: "#AAAAAA"
     },
     ratingContainer: {
         flexDirection: 'row',

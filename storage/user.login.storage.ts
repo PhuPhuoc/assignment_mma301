@@ -15,7 +15,6 @@ const StoreUserLoginInfo = async (userInfo: IUserInfo) => {
 const CheckUserLoggedIn = async (): Promise<boolean> => {
     try {
         const userJson = await AsyncStorage.getItem(key);
-        console.log("user loggin in: ", userJson)
         if (userJson !== null) {
             return true
         }

@@ -6,7 +6,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { CheckExistProductInLikedList, RemoveProduct, StoreData } from '../../storage/product.liked.storage';
 import ProductFeedback from '../feedback/feedback.product';
-import ProductFeedback2 from '../feedback/demo.picker';
 
 // const ProductDetailScreen = ({ route }: { route: any }) => {
 //     const { product }: { product: IProduct } = route.params;
@@ -96,7 +95,7 @@ const ProductDetailScreen = () => {
                     <Text style={styles.buyButtonText}>Buy Now</Text>
                 </TouchableOpacity>
             </View>
-            
+
             <ProductFeedback />
 
             {/* modal for image */}

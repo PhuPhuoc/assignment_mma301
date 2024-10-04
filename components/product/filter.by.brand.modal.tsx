@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 
 const FillterProductBrand = ({ brandFilter, userbrandFilter, setUserbrandFilter }: { brandFilter: string[], userbrandFilter: string[], setUserbrandFilter: (value: string[]) => void }) => {
@@ -22,7 +23,6 @@ const FillterProductBrand = ({ brandFilter, userbrandFilter, setUserbrandFilter 
         } else {
             updatedSelectedBrands = selectedBrands.filter((item) => item !== brand)
         }
-
         setSelectedBrands(updatedSelectedBrands)
     };
 
@@ -35,7 +35,7 @@ const FillterProductBrand = ({ brandFilter, userbrandFilter, setUserbrandFilter 
         <View style={styles.container}>
             <Pressable onPress={() => setIsOpen(true)}>
                 <View style={styles.btnFillter}>
-                    <AntDesign name="filter" size={17} color="#e91e63" />
+                    <FontAwesome6 name="filter" size={17} color="#e91e63" />
                 </View>
             </Pressable>
 

@@ -1,31 +1,37 @@
 [
     {
         "user": "Alice",
+        "date": "04/10/2024",
         "rating": 5,
         "comment": "Sản phẩm tuyệt vời! Tôi rất thích."
     },
     {
         "user": "Bob",
+        "date": "04/10/2024",
         "rating": 4,
         "comment": "Sản phẩm tốt, nhưng có một vài điểm cần cải thiện."
     },
     {
         "user": "Charlie",
+        "date": "03/10/2024",
         "rating": 3,
         "comment": "Trung bình, không như kỳ vọng."
     },
     {
         "user": "Tom",
+        "date": "03/10/2024",
         "rating": 3,
         "comment": "Trung bình, không như kỳ vọng."
     },
     {
         "user": "Violet",
+        "date": "02/10/2024",
         "rating": 2,
         "comment": "Quá tệ, không như kỳ vọng."
     },
     {
         "user": "Arthur",
+        "date": "02/10/2024",
         "rating": 5,
         "comment": "Very goodddddddddd <3 "
     }

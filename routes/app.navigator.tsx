@@ -8,7 +8,6 @@ import ProductDetailScreen from "../components/product/detail.product";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useAuth } from "../auth/use.auth";
 import LoginScreen from "../components/user/login.user";
-// import AntDesign from '@expo/vector-icons/AntDesign';
 
 
 const ProductNavigator = () => {
@@ -36,6 +35,7 @@ const MainNavigator = () => {
     return (
         <Tab.Navigator
             screenOptions={{
+                unmountOnBlur: true,
                 headerShown: false,
                 tabBarActiveBackgroundColor: "#F5F5F5",
                 tabBarActiveTintColor: '#e91e63',
@@ -62,10 +62,10 @@ const MainNavigator = () => {
                     ),
                 }} />
             <Tab.Screen
-                name="LikedPage"
+                name="FavoritePage"
                 component={LikedProductNavigator}
                 options={{
-                    tabBarLabel: 'Liked',
+                    tabBarLabel: 'Favorite',
                     tabBarIcon: ({ focused }) => (
                         // <AntDesign name="heart" size={focused ? 26 : 22} color={focused ? "#e91e63" : "#BEBEBE"} />
                         <Ionicons name="heart-circle-outline" size={focused ? 27 : 23} color={focused ? "#e91e63" : "#BEBEBE"} />
@@ -87,7 +87,6 @@ const MainNavigator = () => {
 
 const AppNavigator = () => {
     const { isLoggedIn } = useAuth();
-    console.log("🚀 ~ AppNavigator ~ isLoggedIn:", isLoggedIn)
     const Stack = createNativeStackNavigator();
     return (
         <NavigationContainer>

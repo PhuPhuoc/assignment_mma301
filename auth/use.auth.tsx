@@ -1,6 +1,5 @@
 import React, { createContext, useState, ReactNode, useContext } from 'react';
 import { CheckUserLoggedIn, StoreUserLoginInfo, UserLogout } from '../storage/user.login.storage';
-import { Alert } from 'react-native';
 
 const duumyEmail: string = "phuoc"
 const duumyPass: string = "123"
@@ -28,7 +27,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const loginWithEmailPassword = (email: string | null, password: string | null) => {
-        console.log("vao login email password")
         if (email === duumyEmail && password === duumyPass) {
             StoreUserLoginInfo(dummyUser)
             setIsLoggedIn(true)

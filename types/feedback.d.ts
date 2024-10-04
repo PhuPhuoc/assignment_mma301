@@ -1,5 +1,6 @@
 type Feedback = {
     user: string
+    date: string
     rating: number
     comment: string
 }

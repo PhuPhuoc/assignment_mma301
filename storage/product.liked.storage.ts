@@ -17,8 +17,6 @@ const GetAllKeys = async (): Promise<string[]> => {
     let keys: string[] = []
     try {
         keys = [...await AsyncStorage.getAllKeys()]
-        console.log("key in GetAllKey: ", keys);
-
     } catch (e) {
         console.error("Error get key:", e);
         return keys;
@@ -27,7 +25,7 @@ const GetAllKeys = async (): Promise<string[]> => {
 }
 
 const GetAllProduct = async (): Promise<IProduct[]> => {
-    let productFormStorage: IProduct[] = []
+    let productFromStorage: IProduct[] = []
     try {
         let keys: string[] = [];
         keys = await GetAllKeys()
@@ -38,15 +36,13 @@ const GetAllProduct = async (): Promise<IProduct[]> => {
             }
             const product = await getData(key)
             if (product !== null) {
-                productFormStorage.push(product)
+                productFromStorage.push(product)
             }
         }
-        return productFormStorage;
-
     } catch (e) {
         console.error("Error get all product:", e);
-        return productFormStorage;
     }
+    return productFromStorage;
 };
 
 const CheckExistProductInLikedList = async ({ product }: { product: IProduct }): Promise<boolean> => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native"
 import ProductCard from "../card/card.product";
 import { Ionicons } from '@expo/vector-icons';
-import FillterProductBrand from "./filter.modal";
+import FillterProductBrand from "./filter.by.brand.modal";
 
 const ShowProductsScreen = () => {
     const [products, setProducts] = useState<IProduct[]>([])
@@ -44,7 +44,6 @@ const ShowProductsScreen = () => {
         for (let [key, value] of brandMap) {
             brands.push(value)
         }
-        console.log("List brand: ", brands)
         setBrandFilter(brands)
     }
 
@@ -53,7 +52,6 @@ const ShowProductsScreen = () => {
     }, [originalProducts]);
 
     useEffect(() => {
-        console.log("filter: ", userbrandFilter)
         handleFilter()
     }, [userbrandFilter]);
 
